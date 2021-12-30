@@ -13,9 +13,11 @@
     <!--자바 파일에 있는 빈등록 애노테이션을 검색을 하고 찾은다음에 빈등록을 해준다. 기준이되는 기본 패키지명을 설정-->
     <context:component-scan base-package="org.example.springboard"/>
 
-    <!--@Controller 활성화 -> 주소값 맵핑할수있다(없어도됨)-->
+    <!--@Controller 활성화 -> 주소값 맵핑할수있다-->
     <mvc:annotation-driven/>
 
+    <mvc:resources mapping="/res/**" location="/res/"/> <!--/res로 요청하는것들은 res로 접근하자라는뜻-->
+    <!--js, css이용할려면 필수-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/"/> <!--앞쪽에 value값이 붙여짐-->
         <property name="suffix" value=".jsp"/> <!--뒤쪽에 value같 붙여짐-->

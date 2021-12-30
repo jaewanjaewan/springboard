@@ -7,12 +7,44 @@
         INSERT INTO t_board
         (title, ctnt)
         VALUES
-        (#{title}, #{ctnt})
+        (#{title}, #{ctnt}) /*boardentitiy의 멤버필드명을 적어야한다*/
     </insert>
 
-    <select id="selBoardList" resultType="BoardEntity">
+    <select id="selBoardList" resultType="BoardEntity"> /*select는 resulttype 적어여함*/
         SELECT iboard, title, hits, rdt
         FROM t_board
         ORDER BY iboard DESC
     </select>
+
+    <select id="selBoard" resultType="BoardEntity">
+        SELECT *
+        FROM t_board
+        WHERE iboard = ${iboard}
+    </select>
+    
+    <update id="updBoard">
+        UPDATE t_board
+        SET
+            <choose>
+                <when test="hits == 1">
+                    hits = hits + 1
+                </when>
+                <otherwise>
+                    <if test="title != null and title != '' ">
+                        title = #{title},
+                    </if>
+                    <if test="ctnt != null and ctnt != '' ">
+                        ctnt = #{ctnt},
+                    </if>
+                    mdt = current_timestamp()
+                </otherwise>
+            </choose>
+        WHERE iboard = ${iboard}
+    </update>
+
+    <delete id="delBoard">
+        DELETE
+        FROM t_board
+        WHERE iboard = ${iboard}
+    </delete>
 </mapper>
