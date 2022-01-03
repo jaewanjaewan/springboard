@@ -11,9 +11,18 @@
 </head>
 <body>
     <h1>리스트</h1>
-    <div>
-        <a href="/board/write">글쓰기</a>
-    </div>
+    <c:if test="${sessionScope.loginUser == null}">
+        <div>
+            <a href="/user/login"><button>로그인</button></a>
+            <a href="/user/join"><button>회원가입</button></a>
+        </div>
+    </c:if>
+    <c:if test="${sessionScope.loginUser != null}">
+        <div>
+            <a href="/board/write"><button>글쓰기</button></a>
+            <a href="/user/logout"><button>로그아웃</button></a>
+        </div>
+    </c:if>
     <div>
         <c:choose>
             <c:when test="${fn:length(requestScope.list) == 0}">
@@ -24,6 +33,7 @@
                     <tr>
                         <th>번호</th>
                         <th>제목</th>
+                        <th>작성자</th>
                         <th>조회수</th>
                         <th>날짜</th>
                     </tr>
@@ -31,7 +41,8 @@
                         <tr class="record" data-iboard="${item.iboard}">
                             <td>${item.iboard}</td>
                             <td><c:out value="${item.title}"/></td>
-                            <td>${item.hits}</td>
+                            <td>${item.writerNm}</td>
+                            <td>${item.hit}</td>
                             <td>${item.rdt}</td>
                         </tr>
                     </c:forEach>

@@ -1,5 +1,7 @@
-package org.example.springboard;
+package org.example.springboard.board;
 
+import org.example.springboard.UserUtils;
+import org.example.springboard.board.model.BoardEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller //자바에서의 빈등록, 서블릿역할을한다고 생각하면됨(필수)
 @RequestMapping("/board")
@@ -44,6 +44,7 @@ public class BoardController {
 
     @GetMapping("/del")
     public String delProc(BoardEntity entity, RedirectAttributes reAttr){
+
         int result = service.delBoard(entity);
         if(result == 0){
             reAttr.addAttribute("iboard", entity.getIboard());
